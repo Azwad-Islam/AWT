@@ -2,6 +2,8 @@ import { Contains, IsDateString, IsEmail, IsEmpty, IsNotEmpty, IsString, IsUrl, 
 
 export class CreateSellerDto {
 
+    id:number;
+    
     @NotContains('0')
     @NotContains('1')
     @NotContains('2')

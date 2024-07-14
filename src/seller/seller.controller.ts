@@ -1,4 +1,4 @@
-import { UseInterceptors, UploadedFile,Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Res, ParseIntPipe, Query } from '@nestjs/common';
+import { UseInterceptors, UploadedFile,Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Res, ParseIntPipe, Query, Put } from '@nestjs/common';
 import { SellerService } from './seller.service';
 import { CreateSellerDto } from './dto/seller.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -15,12 +15,43 @@ export class SellerController {
   create(@Body() createSellerDto: CreateSellerDto) {
     return this.sellerService.create(createSellerDto);
   }
+
+  @Post('addSeller')
+  @UsePipes(new ValidationPipe())
+  addSeller(@Body() myobj:sellerEntity): object {
+    console.log(myobj);
+    return this.sellerService.addSeller(myobj);
+  }
+
+  @Put('updateSeller/:id')
+  updateSeller(@Body() myobj:CreateSellerDto, @Param('id') id:number): object {
+    return this.sellerService.updateSeller(myobj,id)
+  }
   
-  //get seller
+  //get all seller
   @Get('getAllSeller')
   getAllSeller(): Promise<sellerEntity[]> {
     return this.sellerService.getAllSeller();
   }
+  //get seller by id
+  @Get('getSellerByIddb/:id')
+  getSellerByIddb(@Param('id', ParseIntPipe) id: number): Promise<sellerEntity>
+  {
+    return this.sellerService.getSellerByIddb(id);
+  }
+
+
+  //update seller
+  @Put('updateSellerByIdDB/:id')
+    async updateSellerByIdDB(@Param('id') id: number, @Body() updateCustomerDB: sellerEntity): Promise<sellerEntity> {
+    return this.sellerService.updateSellerByIdDB(id, updateCustomerDB);
+  }
+
+  
+@Delete('deleteSeller/:id')
+async deleteSeller(@Param('id') id: number): Promise<string> {
+  return this.sellerService.deleteSeller(id);
+}
 
   @Post('addimage')
   @UseInterceptors(FileInterceptor('myfile',
