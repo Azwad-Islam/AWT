@@ -15,7 +15,7 @@ export class SellerService {
   create(createSellerDto: CreateSellerDto) {
     return this.sellerRepository.save(createSellerDto);
   }
-   //Show all customer from DB NOT WORKING
+   //Show all customer from db WORKING
    getAllSeller(): Promise<sellerEntity[]> {
     return this.sellerRepository.find();
   }
