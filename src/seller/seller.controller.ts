@@ -1,11 +1,10 @@
-import { UseInterceptors, UploadedFile,Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Res } from '@nestjs/common';
+import { UseInterceptors, UploadedFile,Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Res, ParseIntPipe, Query } from '@nestjs/common';
 import { SellerService } from './seller.service';
 import { CreateSellerDto } from './dto/seller.dto';
-
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterError, diskStorage } from "multer";
+import { sellerEntity } from './entities/seller.entity';
 
-//import { UpdateSellerDto } from './dto/update-seller.dto';
 
 @Controller('seller')
 export class SellerController {
@@ -16,8 +15,15 @@ export class SellerController {
   create(@Body() createSellerDto: CreateSellerDto) {
     return this.sellerService.create(createSellerDto);
   }
+  
+  //get seller
+  @Get('getAllSeller')
+  getAllSeller(): Promise<sellerEntity[]> {
+    return this.sellerService.getAllSeller();
+  }
+
   @Post('addimage')
-@UseInterceptors(FileInterceptor('myfile',
+  @UseInterceptors(FileInterceptor('myfile',
   { fileFilter: (req, file, cb) => {
     if (file.originalname.match(/^.*\.(jpg|webp|png|jpeg)$/))
     cb(null, true);
