@@ -1,11 +1,12 @@
 import { NotContains, IsInt, IsString, Min, Max, IsNotEmpty } from 'class-validator';
 
-export class CreateSellerDto {
+export class CreateProductDto {
  // @IsInt()
-  id: number;
-  name: string;
-  age: number;
-  status: string;
+  product_id: number;
+  brand: string;
+  size: string;
+  color: string;
+  price:number;
   //@IsString()
  // @NotContains('0')
  // @NotContains('1')

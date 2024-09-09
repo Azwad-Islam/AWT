@@ -1,15 +1,16 @@
 import { Entity, Column, PrimaryColumn,PrimaryGeneratedColumn} from 'typeorm';
-@Entity("seller")
-//export class Seller {}
-export class sellerEntity{
-@PrimaryColumn()
-id: number;
-@Column()
-name: string;
-@Column()
-email: string;
-@Column()
-password: string;
-@Column()
-social:string;
+
+@Entity('seller')
+export class sellerEntity {
+  @PrimaryColumn({ type:'int', unsigned:true})
+  id: number;
+
+  @Column({ name: 'fullname', type: 'varchar', length: 100 })
+  name: string;
+
+  @Column({ type: 'int', unsigned:true})
+  age: number;
+
+  @Column({ default: 'active' , enum: ['active', 'inactive']})
+  status: string;
 }
